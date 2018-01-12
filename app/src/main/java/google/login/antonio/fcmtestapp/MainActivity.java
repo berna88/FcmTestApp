@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             iv_image.setVisibility(VISIBLE);
             String title = (String) bd.get("title");
             Log.i(TAG, title);
-            message(title);
             Glide.with(getApplicationContext())
                     .load(image)
                     .into(iv_image);
@@ -88,9 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
     }
-    public void message(String message){
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-    }
+
     @SuppressLint("NewApi")
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
