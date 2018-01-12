@@ -45,6 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra("image",messages.getImage());
         intent.putExtra("url", messages.getUrl());
         intent.putExtra("title", messages.getTitle());
+        startActivity(intent);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setContentTitle(messages.getTitle());
