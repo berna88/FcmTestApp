@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,9 +20,9 @@ import com.bumptech.glide.Glide;
 import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
-    private ImageView iv_image;
     private LinearLayout ll_main;
     private String url;
+    private WebView wv_main;
     public static final String TAG = "MainActivity";
     private int currentApiVersion;
     @SuppressLint("NewApi")
@@ -61,28 +63,25 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         }
                     });
         }
-        iv_image = (ImageView) findViewById(R.id.iv_image);
+        wv_main = (WebView) findViewById(R.id.wv_main);
         ll_main = (LinearLayout) findViewById(R.id.ll_menu);
         ll_main.setOnTouchListener(this);
+        ll_main.setOnTouchListener(null);
         Intent intent = getIntent();
         final Bundle bd = intent.getExtras();
         if(bd != null)
         {
             String image = (String) bd.get("image");
-            iv_image.setVisibility(VISIBLE);
             String title = (String) bd.get("title");
             Log.i(TAG, title);
-            Glide.with(getApplicationContext())
-                    .load(image)
-                    .into(iv_image);
-            iv_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Uri uri = Uri.parse((String) bd.get("url"));
-                    Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(i);
-                }
-            });
+            try {
+                WebSettings webSettings = wv_main.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                url = (String) bd.get("url");
+                wv_main.loadUrl(url);
+            }catch (Exception e){
+                Log.i(TAG, e.getMessage().toString());
+            }
         }
 
     }
